@@ -1,0 +1,138 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #fffaf0; /* 更淡的乳白色背景 */
+    color: #333;
+}
+
+header {
+    background-color: #8a2be2; /* 淡紫色 */
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}
+
+nav {
+    background: linear-gradient(to right, #8a2be2, #9370db); /* 淡紫色渐变 */
+    padding: 10px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+nav ul li a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+nav ul li a.active {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+main {
+    padding: 20px;
+}
+
+section {
+    margin-bottom: 40px;
+}
+
+h2 {
+    color: #8a2be2; /* 淡紫色 */
+    border-bottom: 2px solid #8a2be2;
+    padding-bottom: 10px;
+}
+
+.game-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 10px;
+    width: 300px;
+    display: inline-block;
+    text-align: center;
+    overflow: hidden; /* 使用 overflow: hidden 隐藏超出内容 */
+}
+
+.game-card img {
+    width: 100%;
+    height: 200px;
+    border-radius: 8px;
+}
+
+.rating {
+    color: #f1c40f;
+    font-size: 20px;
+    margin: 10px 0;
+}
+
+.game-description {
+    font-size: 14px;
+    color: #666;
+    margin: 10px 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* 限制显示两行 */
+    -webkit-box-orient: vertical;
+    height: 40px; /* 固定高度为两行 */
+    line-height: 20px;
+}
+
+.game-description:hover {
+    overflow: visible;
+    white-space: normal;
+    text-overflow: unset;
+    -webkit-line-clamp: unset;
+}
+
+button {
+    background-color: #8a2be2; /* 淡紫色 */
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #9370db; /* 淡紫色渐变 */
+}
+
+footer {
+    background-color: #8a2be2; /* 淡紫色 */
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 60px; /* 设置一个固定高度，确保内容垂直居中 */
+}
+
+footer p {
+    margin: 0;
+}
