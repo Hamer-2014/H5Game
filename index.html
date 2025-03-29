@@ -6,16 +6,18 @@
     <title>H5 Game Collection</title>
     <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="./Images/H5-Collect.png" type="image/png">
 </head>
 <body>
     <header>
+        <img src="./Images/H5-Collect.png" alt="H5 Game Collection Logo" style="max-width: 200px; margin-bottom: 10px;">
         <h1>H5 Game Collection</h1>
         <p>Weekly updates with at least one new game</p>
     </header>
 
     <nav>
         <ul>
-            <li><a href="#popular-games">Popular Games</a></li>
+            <li><a href="#popular-games" class="active">Popular Games</a></li>
             <li><a href="#casual-games">Casual Games</a></li>
             <li><a href="#puzzle-games">Puzzle Games</a></li>
             <li><a href="#other-games">Other Games</a></li>
@@ -25,116 +27,28 @@
     <main>
         <section id="popular-games">
             <h2>Popular Games</h2>
-            <div class="game-card">
-                <img src="./images/unsplash.jpg" alt="Game 1">
-                <h3>Game 1</h3>
-                <div class="rating">★★★★☆</div>
-                <p class="game-description" title="This is a fun and exciting game that will keep you entertained for hours.">This is a fun and exciting game that will keep you entertained for hours.</p>
-                <button onclick="openGame('game1')">Play Now</button>
-            </div>
-            <div class="game-card">
-                <img src="./images/banner1.png" alt="Game 2">
-                <h3>Game 2</h3>
-                <div class="rating">★★★☆☆</div>
-                <p class="game-description">A relaxing game perfect for casual play.</p>
-                <button onclick="openGame('game2')">Play Now</button>
-            </div>
-            <div class="game-card">
-                <img src="./images/unsplash.jpg" alt="Game 3">
-                <h3>Game 3</h3>
-                <div class="rating">★★★★★</div>
-                <p class="game-description">Challenge your mind with this intricate puzzle game.</p>
-                <button onclick="openGame('game3')">Play Now</button>
-            </div>
-            <div class="game-card">
-                <img src="./images/unsplash.jpg" alt="Game 4">
-                <h3>Game 4</h3>
-                <div class="rating">★★☆☆☆</div>
-                <p class="game-description">Explore this unique game with a twist.</p>
-                <button onclick="openGame('game4')">Play Now</button>
-            </div>
+            <div class="games-container"></div>
         </section>
 
         <section id="casual-games">
             <h2>Casual Games</h2>
-            <div class="game-card">
-                <img src="./images/unsplash.jpg" alt="Game 2">
-                <h3>Game 2</h3>
-                <div class="rating">★★★☆☆</div>
-                <p class="game-description">A relaxing game perfect for casual play.</p>
-                <button onclick="openGame('game2')">Play Now</button>
-            </div>
-            <div class="game-card">
-                <img src="./images/unsplash.jpg" alt="Game 4">
-                <h3>Game 4</h3>
-                <div class="rating">★★☆☆☆</div>
-                <p class="game-description">Explore this unique game with a twist.</p>
-                <button onclick="openGame('game4')">Play Now</button>
-            </div>
+            <div class="games-container"></div>
         </section>
 
         <section id="puzzle-games">
             <h2>Puzzle Games</h2>
-            <div class="game-card">
-                <img src="./images/unsplash.jpg" alt="Game 3">
-                <h3>Game 3</h3>
-                <div class="rating">★★★★★</div>
-                <p class="game-description">Challenge your mind with this intricate puzzle game.</p>
-                <button onclick="openGame('game3')">Play Now</button>
-            </div>
+            <div class="games-container"></div>
         </section>
 
         <section id="other-games">
             <h2>Other Games</h2>
-            <div class="game-card">
-                <img src="./images/unsplash.jpg" alt="Game 4">
-                <h3>Game 4</h3>
-                <div class="rating">★★☆☆☆</div>
-                <p class="game-description">Explore this unique game with a twist.</p>
-                <button onclick="openGame('game4')">Play Now</button>
-            </div>
+            <div class="games-container"></div>
         </section>
     </main>
 
     <footer>
         <p>&copy; 2025 H5 Game Collection. All rights reserved.</p>
     </footer>
-
-    <script>
-        function openGame(gameId) {
-            const modal = new bootstrap.Modal(document.getElementById('gameModal'));
-            const modalTitle = document.getElementById('gameModalLabel');
-            const modalBody = document.getElementById('gameModalBody');
-            modalTitle.textContent = `Starting ${gameId}`;
-            modalBody.innerHTML = `<iframe src="https://chvin.github.io/react-tetris/" style="width: 100%; height: 100%; border: none;"></iframe>`;
-            modal.show();
-        }
-
-        // 添加图片点击事件监听器
-        document.querySelectorAll('.game-card img').forEach(img => {
-            img.addEventListener('click', function() {
-                const gameId = this.alt.replace('Game ', 'game');
-                openGame(gameId);
-            });
-        });
-
-        // 添加滚动事件监听器
-        window.addEventListener('scroll', () => {
-            const sections = document.querySelectorAll('section');
-            const navLinks = document.querySelectorAll('nav ul li a');
-
-            sections.forEach((section, index) => {
-                const sectionTop = section.offsetTop - 50;
-                const sectionBottom = sectionTop + section.offsetHeight;
-
-                if (window.scrollY >= sectionTop && window.scrollY < sectionBottom) {
-                    navLinks.forEach(link => link.classList.remove('active'));
-                    navLinks[index].classList.add('active');
-                }
-            });
-        });
-    </script>
-
     <!-- Modal -->
     <div class="modal fade" id="gameModal" tabindex="-1" aria-labelledby="gameModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-fullscreen">
@@ -151,5 +65,6 @@
     </div>
 
     <script src="https://cdn.bootcdn.net/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="scripts.js"></script>
 </body>
 </html>
