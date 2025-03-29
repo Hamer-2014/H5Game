@@ -1,6 +1,6 @@
 const gamesData = {
     'popular-games': [{
-            img: './images/tetris.gif',
+            img: './images/Tetris.gif',
             alt: 'Tetris',
             title: 'Tetris',
             rating: '★★★★☆',
@@ -9,7 +9,7 @@ const gamesData = {
         }
     ],
     'casual-games': [{
-            img: './images/tetris.gif',
+            img: './images/unsplash.jpg',
             alt: 'Tetris',
             title: 'Tetris',
             rating: '★★★★☆',
@@ -18,7 +18,7 @@ const gamesData = {
         }
     ],
     'puzzle-games': [{
-            img: './images/tetris.gif',
+            img: './images/unsplash.jpg',
             alt: 'Tetris',
             title: 'Tetris',
             rating: '★★★★☆',
@@ -26,7 +26,7 @@ const gamesData = {
             url: 'https://chvin.github.io/react-tetris/'
     }],
     'other-games': [{
-            img: './images/tetris.gif',
+            img: './images/unsplash.jpg',
             alt: 'Tetris',
             title: 'Tetris',
             rating: '★★★★☆',
