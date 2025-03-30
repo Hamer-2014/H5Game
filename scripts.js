@@ -29,7 +29,7 @@ const gamesData = {
             title: 'Zoo Boom',
             rating: '★★★☆☆',
             description: 'Join the ultimate puzzle game adventure and match cute animal cubes! The gameplay is simple: just tap at least two animals of the same color to collect them for your zoo and complete all tasks to progress.',
-            url: 'https://games.cdn.famobi.com/html5games/z/zoo-boom/cd0be843/?fg_domain=play.famobi.com&fg_aid=A1000-111&fg_uid=5e772ebe-9e0a-4cd3-adcf-bba662f35535&fg_pid=e37ab3ce-88cd-4438-9b9c-a37df5d33736&fg_beat=267&original_ref=https%3A%2F%2Fplay.famobi.com%2Fhtml5game%2F5e772ebe-9e0a-4cd3-adcf-bba662f35535%2FA1000-1'
+            url: 'https://play.famobi.com/zoo-boom/A1000-11'
         }
         , {
             img: './images/plants-vs-zombies.jpg',
@@ -122,7 +122,8 @@ function openGame(gameId) {
     
     if (game) {
         modalTitle.textContent = `Starting ${game.title}`;
-        modalBody.innerHTML = `<iframe src="${game.url}" style="width: 100%; height: 100%; border: none;"></iframe>`;
+        //modalBody.innerHTML = `<iframe src="${game.url}" style="width: 100%; height: 100%; border: none;" sandbox="allow-scripts allow-same-origin"></iframe>`;
+        modalBody.innerHTML = `<iframe src="${game.url}" style="width: 100%; height: 100%; border: none;" ></iframe>`;
         modal.show();
     }
 }
@@ -135,6 +136,12 @@ document.addEventListener('DOMContentLoaded', function() {
             openGame(gameId);
         });
     });
+});
+
+// 监听弹窗关闭事件
+document.getElementById('gameModal').addEventListener('hidden.bs.modal', function () {
+    // 清空 modal-body 的内容
+    document.getElementById('gameModalBody').innerHTML = '';
 });
 
 // 添加滚动事件监听器
