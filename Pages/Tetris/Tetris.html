@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<!-- saved from url=(0037)https://chvin.github.io/react-tetris/ -->
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="renderer" content="webkit">
+		<meta name="description" content="使用React、Redux、Immutable制作的俄罗斯方块">
+		<meta name="keywords" content="俄罗斯方块,Tetris,React,Redux,Immuatble,JavaScript">
+		<meta name="format-detection" content="telephone=no">
+        <style>
+            ._2iIk{display : none !important;}
+        </style>
+		<script>
+			;
+(function() {
+    var w = parseInt(window.screen.width),
+        s = w / 640,
+        u = navigator.userAgent.toLowerCase(),
+        m = '<meta name="viewport" content="width=640,';
+    if (/android (\d+\.\d+)/.test(u)) {
+        if (parseFloat(RegExp.$1) > 2.3) m += 'minimum-scale=' + s + ',maximum-scale=' + s + ',';
+    } else {
+        m += 'user-scalable=no,';
+    }
+    m += 'target-densitydpi=device-dpi">';
+    document.write(m);
+}());
+		</script>
+		<meta name="viewport" content="width=640,user-scalable=no,target-densitydpi=device-dpi">
+		<title>
+			Tetris
+		</title>
+		<link href="./TetrisFiles/loader.css" rel="stylesheet">
+		<link href="./TetrisFiles/css-1.0.1.css" rel="stylesheet">
+		<style data-id="immersive-translate-input-injected-css">
+			.immersive-translate-input { position: absolute; top: 0; right: 0; left:
+			0; bottom: 0; z-index: 2147483647; display: flex; justify-content: center;
+			align-items: center; } .immersive-translate-attach-loading::after { content:
+			" "; --loading-color: #f78fb6; width: 6px; height: 6px; border-radius:
+			50%; display: block; margin: 12px auto; position: relative; color: white;
+			left: -100px; box-sizing: border-box; animation: immersiveTranslateShadowRolling
+			1.5s linear infinite; position: absolute; top: 50%; left: 50%; transform:
+			translate(-2000%, -50%); z-index: 100; } .immersive-translate-loading-spinner
+			{ vertical-align: middle !important; width: 10px !important; height: 10px
+			!important; display: inline-block !important; margin: 0 4px !important;
+			border: 2px rgba(221, 244, 255, 0.6) solid !important; border-top: 2px
+			rgba(0, 0, 0, 0.375) solid !important; border-left: 2px rgba(0, 0, 0, 0.375)
+			solid !important; border-radius: 50% !important; padding: 0 !important;
+			-webkit-animation: immersive-translate-loading-animation 0.6s infinite
+			linear !important; animation: immersive-translate-loading-animation 0.6s
+			infinite linear !important; } @-webkit-keyframes immersive-translate-loading-animation
+			{ from { -webkit-transform: rotate(0deg); } to { -webkit-transform: rotate(359deg);
+			} } @keyframes immersive-translate-loading-animation { from { transform:
+			rotate(0deg); } to { transform: rotate(359deg); } } .immersive-translate-input-loading
+			{ --loading-color: #f78fb6; width: 6px; height: 6px; border-radius: 50%;
+			display: block; margin: 12px auto; position: relative; color: white; left:
+			-100px; box-sizing: border-box; animation: immersiveTranslateShadowRolling
+			1.5s linear infinite; } @keyframes immersiveTranslateShadowRolling { 0%
+			{ box-shadow: 0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0),
+			0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0); } 12% { box-shadow:
+			100px 0 var(--loading-color), 0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255,
+			255, 255, 0), 0px 0 rgba(255, 255, 255, 0); } 25% { box-shadow: 110px 0
+			var(--loading-color), 100px 0 var(--loading-color), 0px 0 rgba(255, 255,
+			255, 0), 0px 0 rgba(255, 255, 255, 0); } 36% { box-shadow: 120px 0 var(--loading-color),
+			110px 0 var(--loading-color), 100px 0 var(--loading-color), 0px 0 rgba(255,
+			255, 255, 0); } 50% { box-shadow: 130px 0 var(--loading-color), 120px 0
+			var(--loading-color), 110px 0 var(--loading-color), 100px 0 var(--loading-color);
+			} 62% { box-shadow: 200px 0 rgba(255, 255, 255, 0), 130px 0 var(--loading-color),
+			120px 0 var(--loading-color), 110px 0 var(--loading-color); } 75% { box-shadow:
+			200px 0 rgba(255, 255, 255, 0), 200px 0 rgba(255, 255, 255, 0), 130px 0
+			var(--loading-color), 120px 0 var(--loading-color); } 87% { box-shadow:
+			200px 0 rgba(255, 255, 255, 0), 200px 0 rgba(255, 255, 255, 0), 200px 0
+			rgba(255, 255, 255, 0), 130px 0 var(--loading-color); } 100% { box-shadow:
+			200px 0 rgba(255, 255, 255, 0), 200px 0 rgba(255, 255, 255, 0), 200px 0
+			rgba(255, 255, 255, 0), 200px 0 rgba(255, 255, 255, 0); } } .immersive-translate-toast
+			{ display: flex; position: fixed; z-index: 2147483647; left: 0; right:
+			0; top: 1%; width: fit-content; padding: 12px 20px; margin: auto; overflow:
+			auto; background: #fef6f9; box-shadow: 0px 4px 10px 0px rgba(0, 10, 30,
+			0.06); font-size: 15px; border-radius: 8px; color: #333; } .immersive-translate-toast-content
+			{ display: flex; flex-direction: row; align-items: center; } .immersive-translate-toast-hidden
+			{ margin: 0 20px 0 72px; text-decoration: underline; cursor: pointer; }
+			.immersive-translate-toast-close { color: #666666; font-size: 20px; font-weight:
+			bold; padding: 0 10px; cursor: pointer; } @media screen and (max-width:
+			768px) { .immersive-translate-toast { top: 0; padding: 12px 0px 0 10px;
+			} .immersive-translate-toast-content { flex-direction: column; text-align:
+			center; } .immersive-translate-toast-hidden { margin: 10px auto; } } .immersive-translate-modal
+			{ display: none; position: fixed; z-index: 2147483647; left: 0; top: 0;
+			width: 100%; height: 100%; overflow: auto; background-color: rgb(0, 0,
+			0); background-color: rgba(0, 0, 0, 0.4); font-size: 15px; } .immersive-translate-modal-content
+			{ background-color: #fefefe; margin: 10% auto; padding: 40px 24px 24px;
+			border: 1px solid #888; border-radius: 10px; width: 80%; max-width: 270px;
+			font-family: system-ui, -apple-system, "Segoe UI", "Roboto", "Ubuntu",
+			"Cantarell", "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+			"Segoe UI Symbol", "Noto Color Emoji"; position: relative; } @media screen
+			and (max-width: 768px) { .immersive-translate-modal-content { margin: 50%
+			auto !important; } } .immersive-translate-modal .immersive-translate-modal-content-in-input
+			{ max-width: 500px; } .immersive-translate-modal-content-in-input .immersive-translate-modal-body
+			{ text-align: left; max-height: unset; } .immersive-translate-modal-title
+			{ text-align: center; font-size: 16px; font-weight: 700; color: #333333;
+			} .immersive-translate-modal-body { text-align: center; font-size: 14px;
+			font-weight: 400; color: #333333; word-break: break-all; margin-top: 24px;
+			} @media screen and (max-width: 768px) { .immersive-translate-modal-body
+			{ max-height: 250px; overflow-y: auto; } } .immersive-translate-close {
+			color: #666666; position: absolute; right: 16px; top: 16px; font-size:
+			20px; font-weight: bold; } .immersive-translate-close:hover, .immersive-translate-close:focus
+			{ color: black; text-decoration: none; cursor: pointer; } .immersive-translate-modal-footer
+			{ display: flex; justify-content: center; flex-wrap: wrap; margin-top:
+			24px; } .immersive-translate-btn { width: fit-content; color: #fff; background-color:
+			#ea4c89; border: none; font-size: 16px; margin: 0 8px; padding: 9px 30px;
+			border-radius: 5px; display: flex; align-items: center; justify-content:
+			center; cursor: pointer; transition: background-color 0.3s ease; } .immersive-translate-btn:hover
+			{ background-color: #f082ac; } .immersive-translate-btn:disabled { opacity:
+			0.6; cursor: not-allowed; } .immersive-translate-btn:disabled:hover { background-color:
+			#ea4c89; } .immersive-translate-cancel-btn { /* gray color */ background-color:
+			rgb(89, 107, 120); } .immersive-translate-cancel-btn:hover { background-color:
+			hsl(205, 20%, 32%); } .immersive-translate-action-btn { background-color:
+			transparent; color: #ea4c89; border: 1px solid #ea4c89; } .immersive-translate-btn
+			svg { margin-right: 5px; } .immersive-translate-link { cursor: pointer;
+			user-select: none; -webkit-user-drag: none; text-decoration: none; color:
+			#007bff; -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1); } .immersive-translate-primary-link
+			{ cursor: pointer; user-select: none; -webkit-user-drag: none; text-decoration:
+			none; color: #ea4c89; -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+			} .immersive-translate-modal input[type="radio"] { margin: 0 6px; cursor:
+			pointer; } .immersive-translate-modal label { cursor: pointer; } .immersive-translate-close-action
+			{ position: absolute; top: 2px; right: 0px; cursor: pointer; } .imt-image-status
+			{ background-color: rgba(0, 0, 0, 0.5) !important; display: flex !important;
+			flex-direction: column !important; align-items: center !important; justify-content:
+			center !important; border-radius: 16px !important; } .imt-image-status
+			img, .imt-image-status svg, .imt-img-loading { width: 28px !important;
+			height: 28px !important; margin: 0 0 8px 0 !important; min-height: 28px
+			!important; min-width: 28px !important; position: relative !important;
+			} .imt-img-loading { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADgAAAA4CAMAAACfWMssAAAAtFBMVEUAAAD////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////oK74hAAAAPHRSTlMABBMIDyQXHwyBfFdDMSw+OjXCb+5RG51IvV/k0rOqlGRM6KKMhdvNyZBz9MaupmxpWyj437iYd/yJVNZeuUC7AAACt0lEQVRIx53T2XKiUBCA4QYOiyCbiAsuuGBcYtxiYtT3f6/pbqoYHVFO5r+iivpo6DpAWYpqeoFfr9f90DsYAuRSWkFnPO50OgR9PwiCUFcl2GEcx+N/YBh6pvKaefHlUgZd1zVe0NbYcQjGBfzrPE8Xz8aF+71D8gG6DHFPpc4a7xFiCDuhaWgKgGIJQ3d5IMGDrpS4S5KgpIm+en9f6PlAhKby4JwEIxlYJV9h5k5nee9GoxHJ2IDSNB0dwdad1NAxDJ/uXDHYmebdk4PdbkS58CIVHdYSUHTYYRWOJblWSyu2lmy3KNFVJNBhxcuGW4YBVCbYGRZwIooipHsNqjM4FbgOQqQqSKQQU9V8xmi1QlgHqQQ6DDBvRUVCDirs+EzGDGOQTCATgtYTnbCVLgsVgRE0T1QE0qHCFAht2z6dLvJQs3Lo2FQoDxWNUiBhaP4eRgwNkI+dAjVOA/kUrIDwf3CG8NfNOE0eiFotSuo+rBiq8tD9oY4Qzc6YJw99hl1wzpQvD7ef2M8QgnOGJfJw+EltQc+oX2yn907QB22WZcvlUpd143dqQu+8pCJZuGE4xCuPXJqqcs5sNpsI93Rmzym1k4Npk+oD1SH3/a3LOK/JpUBpWfqNySxWzCfNCUITuDG5dtuphrUJ1myeIE9bIsPiKrfqTai5WZxbhtNphYx6GEIHihyGFTI69lje/rxajdh0s0msZ0zYxyPLhYCb1CyHm9Qsd2H37Y3lugVwL9kNh8Ot8cha6fUNQ8nuXi5z9/ExsAO4zQrb/ev1yrCB7lGyQzgYDGuxq1toDN/JGvN+HyWNHKB7zEoK+PX11e12G431erGYzwmytAWU56fkMHY5JJnDRR2eZji3AwtIcrEV8Cojat/BdQ7XOwGV1e1hDjGGjXbdArm8uJZtCH5MbcctVX8A1WpqumJHwckAAAAASUVORK5CYII=");
+			background-size: 28px 28px; animation: image-loading-rotate 1s linear infinite
+			!important; } .imt-image-status span { color: var(--bg-2, #fff) !important;
+			font-size: 14px !important; line-height: 14px !important; font-weight:
+			500 !important; font-family: "PingFang SC", Arial, sans-serif !important;
+			} @keyframes image-loading-rotate { from { transform: rotate(360deg); }
+			to { transform: rotate(0deg); } }
+		</style>
+	</head>
+	<body>
+		<div id="root">
+			<div data-reactroot="" class="_3Lk6" style="transform: scale(0.998958);">
+				<div class="_1fjB">
+					<div class="_2OLA">
+						<div class="DOXx">
+							<span class="l _1xND" style="width: 40px;">
+							</span>
+							<span class="l _1xND">
+							</span>
+							<span class="l _1xND">
+							</span>
+							<span class="l _1xND">
+							</span>
+							<span class="l _1xND">
+							</span>
+							<span class="r _1cYd" style="width: 40px;">
+							</span>
+							<span class="r _1cYd">
+							</span>
+							<span class="r _1cYd">
+							</span>
+							<span class="r _1cYd">
+							</span>
+							<span class="r _1cYd">
+							</span>
+						</div>
+						<h1>
+							俄罗斯方块
+						</h1>
+						<div class="nVeA">
+							<b class="c">
+							</b>
+							<div class="clear">
+							</div>
+							<b class="c">
+							</b>
+							<b class="c">
+							</b>
+							<div class="clear">
+							</div>
+							<em>
+							</em>
+							<b class="c">
+							</b>
+							<p>
+							</p>
+							<em>
+							</em>
+							<b class="c">
+							</b>
+							<div class="clear">
+							</div>
+							<b class="c">
+							</b>
+							<b class="c">
+							</b>
+							<div class="clear">
+							</div>
+							<em>
+							</em>
+							<b class="c">
+							</b>
+							<p>
+							</p>
+							<b class="c">
+							</b>
+							<b class="c">
+							</b>
+							<b class="c">
+							</b>
+							<b class="c">
+							</b>
+							<p>
+							</p>
+							<b class="c">
+							</b>
+							<div class="clear">
+							</div>
+							<b class="c">
+							</b>
+							<b class="c">
+							</b>
+							<div class="clear">
+							</div>
+							<b class="c">
+							</b>
+							<p>
+							</p>
+							<b class="c">
+							</b>
+							<b class="c">
+							</b>
+							<div class="clear">
+							</div>
+							<b class="c">
+							</b>
+							<div class="clear">
+							</div>
+							<b class="c">
+							</b>
+							<p>
+							</p>
+							<em>
+							</em>
+							<b class="c">
+							</b>
+							<div class="clear">
+							</div>
+							<em>
+							</em>
+							<b class="c">
+							</b>
+							<div class="clear">
+							</div>
+							<em>
+							</em>
+							<b class="c">
+							</b>
+							<div class="clear">
+							</div>
+							<em>
+							</em>
+							<b class="c">
+							</b>
+						</div>
+						<div class="nVeA _395z">
+							<em>
+							</em>
+							<b class="c">
+							</b>
+							<div class="clear">
+							</div>
+							<b class="c">
+							</b>
+							<b class="c">
+							</b>
+							<div class="clear">
+							</div>
+							<b class="c">
+							</b>
+							<p>
+							</p>
+							<b class="c">
+							</b>
+							<div class="clear">
+							</div>
+							<b class="c">
+							</b>
+							<b class="c">
+							</b>
+							<div class="clear">
+							</div>
+							<b class="c">
+							</b>
+							<p>
+							</p>
+							<b class="c">
+							</b>
+							<b class="c">
+							</b>
+							<b class="c">
+							</b>
+							<b class="c">
+							</b>
+							<p>
+							</p>
+							<em>
+							</em>
+							<b class="c">
+							</b>
+							<div class="clear">
+							</div>
+							<b class="c">
+							</b>
+							<b class="c">
+							</b>
+							<div class="clear">
+							</div>
+							<em>
+							</em>
+							<b class="c">
+							</b>
+							<p>
+							</p>
+							<b class="c">
+							</b>
+							<b class="c">
+							</b>
+							<div class="clear">
+							</div>
+							<em>
+							</em>
+							<b class="c">
+							</b>
+							<div class="clear">
+							</div>
+							<em>
+							</em>
+							<b class="c">
+							</b>
+							<p>
+							</p>
+							<b class="c">
+							</b>
+							<div class="clear">
+							</div>
+							<b class="c">
+							</b>
+							<div class="clear">
+							</div>
+							<b class="c">
+							</b>
+							<div class="clear">
+							</div>
+							<b class="c">
+							</b>
+						</div>
+					</div>
+					<div class="_2iZA">
+						<div class="_2lJh">
+							<div class="_6pVK">
+								<p>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+								</p>
+								<p>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+								</p>
+								<p>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+								</p>
+								<p>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+								</p>
+								<p>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+								</p>
+								<p>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+								</p>
+								<p>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+								</p>
+								<p>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+								</p>
+								<p>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+								</p>
+								<p>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+								</p>
+								<p>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+								</p>
+								<p>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+								</p>
+								<p>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+								</p>
+								<p>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+								</p>
+								<p>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+								</p>
+								<p>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+								</p>
+								<p>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+								</p>
+								<p>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+								</p>
+								<p>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+								</p>
+								<p>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+									<b class="">
+									</b>
+								</p>
+							</div>
+							<div class="_20Jp" style="display: block;">
+								<div class="bg AFTs _1JBw">
+								</div>
+								<p>
+									俄罗斯方块
+									<br>
+									TETRIS
+								</p>
+							</div>
+							<div class="_1deS">
+								<div>
+									<p>
+										最高分
+									</p>
+									<div class="iHKP">
+										<span class="bg _2kln">
+										</span>
+										<span class="bg _2kln">
+										</span>
+										<span class="bg _2kln">
+										</span>
+										<span class="bg _2kln">
+										</span>
+										<span class="bg _2kln">
+										</span>
+										<span class="bg _2hru">
+										</span>
+									</div>
+								</div>
+								<p>
+									起始行
+								</p>
+								<div class="iHKP">
+									<span class="bg _2kln">
+									</span>
+									<span class="bg _2kln">
+									</span>
+									<span class="bg _2kln">
+									</span>
+									<span class="bg _2kln">
+									</span>
+									<span class="bg _2kln">
+									</span>
+									<span class="bg _2hru">
+									</span>
+								</div>
+								<p>
+									级别
+								</p>
+								<div class="iHKP">
+									<span class="bg _2B-l">
+									</span>
+								</div>
+								<p>
+									下一个
+								</p>
+								<div class="_3Wmt">
+									<div>
+										<b class="c">
+										</b>
+										<b class="">
+										</b>
+										<b class="">
+										</b>
+										<b class="">
+										</b>
+									</div>
+									<div>
+										<b class="c">
+										</b>
+										<b class="c">
+										</b>
+										<b class="c">
+										</b>
+										<b class="">
+										</b>
+									</div>
+								</div>
+								<div class="_8hag">
+									<div class="bg EHci TTF4">
+									</div>
+									<div class="bg _37mu">
+									</div>
+									<div class="iHKP">
+										<span class="bg ShGQ">
+										</span>
+										<span class="bg _2V1K">
+										</span>
+										<span class="bg hOfM">
+										</span>
+										<span class="bg _3bYF">
+										</span>
+										<span class="bg _3_id">
+										</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="J9SA" style="margin-top: 20px;">
+					<div class="_1pg0 _23pZ _2TvZ" style="top: 0px; left: 374px;">
+						<i class="">
+						</i>
+						<em style="transform: translate(0px, 63px) scale(1, 2);">
+						</em>
+						<span class="_1zCL">
+							旋转
+						</span>
+					</div>
+					<div class="_1pg0 _23pZ _2TvZ" style="top: 180px; left: 374px;">
+						<i class="">
+						</i>
+						<em style="transform: translate(0px, -71px) rotate(180deg) scale(1, 2);">
+						</em>
+						<span class="">
+							下移
+						</span>
+					</div>
+					<div class="_1pg0 _23pZ _2TvZ" style="top: 90px; left: 284px;">
+						<i class="">
+						</i>
+						<em style="transform: translate(60px, -12px) rotate(270deg) scale(1, 2);">
+						</em>
+						<span class="">
+							左移
+						</span>
+					</div>
+					<div class="_1pg0 _23pZ _2TvZ" style="top: 90px; left: 464px;">
+						<i class="">
+						</i>
+						<em style="transform: translate(-60px, -12px) rotate(90deg) scale(1, 2);">
+						</em>
+						<span class="">
+							右移
+						</span>
+					</div>
+					<div class="_1pg0 _23pZ p4fG" style="top: 100px; left: 52px;">
+						<i class="">
+						</i>
+						<span class="">
+							掉落 (SPACE)
+						</span>
+					</div>
+					<div class="_1pg0 _3kg_ oW6K" style="top: 0px; left: 196px;">
+						<i class="">
+						</i>
+						<span class="">
+							重玩(R)
+						</span>
+					</div>
+					<div class="_1pg0 RBZg oW6K" style="top: 0px; left: 106px;">
+						<i class="">
+						</i>
+						<span class="">
+							音效(S)
+						</span>
+					</div>
+					<div class="_1pg0 RBZg oW6K" style="top: 0px; left: 16px;">
+						<i class="">
+						</i>
+						<span class="">
+							暂停(P)
+						</span>
+					</div>
+				</div>
+				<div style="display: none;">
+					<div class="_2iIk _15Dj">
+						<div class="_2fH-">
+							<em style="transform: translate(0px, -3px) scale(1, 2);">
+							</em>
+						</div>
+						<div class="_I0Q">
+							<em style="transform: translate(-7px, 3px) rotate(-90deg) scale(1, 2);">
+							</em>
+						</div>
+						<div class="_1Pbk">
+							<em style="transform: translate(0px, 9px) rotate(180deg) scale(1, 2);">
+							</em>
+						</div>
+						<div class="_15Dj">
+							<em style="transform: translate(7px, 3px) rotate(90deg) scale(1, 2);">
+							</em>
+						</div>
+					</div>
+					<div class="_2iIk _I0Q">
+						<p>
+							<a href="https://github.com/chvin/react-tetris" rel="noopener noreferrer"
+							target="_blank" title="查看源代码">
+								GitHub:
+							</a>
+							<br>
+							<iframe src="./TetrisFiles/github-btn.html" frameborder="0" scrolling="0"
+							width="170px" height="20px" style="transform: scale(1.68); transform-origin: left center;">
+							</iframe>
+							<br>
+							<iframe src="./TetrisFiles/github-btn(1).html" frameborder="0" scrolling="0"
+							width="170px" height="20px" style="transform: scale(1.68); transform-origin: left center;">
+							</iframe>
+						</p>
+						<div class="_3qj_">
+							SPACE
+						</div>
+					</div>
+					<div class="_2iIk _111n">
+						<img src="data:image/png;base64,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"
+						alt="二维码">
+					</div>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="./TetrisFiles/app-1.0.1.js.下载">
+		</script>
+	</body>
+</html>
