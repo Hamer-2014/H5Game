@@ -126,12 +126,12 @@ footer {
     background-color: #8a2be2; /* 淡紫色 */
     color: #fff;
     text-align: center;
-    padding: 10px;
     width: 100%;
-    display: flex;
+    display: block;
     align-items: center;
     justify-content: center;
-    height: 60px; /* 设置一个固定高度，确保内容垂直居中 */
+    padding: 20px;
+
 }
 
 footer p {
