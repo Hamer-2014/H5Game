@@ -52,6 +52,8 @@ nav ul li a.active {
 
 main {
     padding: 20px;
+    width: 1660px;
+    margin: 0 auto;
 }
 
 section {
